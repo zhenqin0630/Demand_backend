@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.demand.mapper.DemandMapper">
+  <resultMap id="BaseResultMap" type="com.spring.demand.model.Demand">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="skill" jdbcType="VARCHAR" property="skill" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="industry" jdbcType="VARCHAR" property="industry" />
+    <result column="band_low" jdbcType="INTEGER" property="bandLow" />
+    <result column="band_high" jdbcType="INTEGER" property="bandHigh" />
+    <result column="onsite" jdbcType="BIT" property="onsite" />
+    <result column="parttime" jdbcType="BIT" property="parttime" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, skill, language, location, industry, band_low, band_high, onsite, parttime, quantity, 
+    start_time, end_time, status, comment, createtime, updater, updatetime
+  </sql>
+
+  <select id="findDemand" resultMap="BaseResultMap">
+    select * from t_demand order by updatetime desc,id limit #{arg0}, #{arg1}
+  </select>
+
+  <select id="searchDemand" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_demand
+    <trim prefix="where" prefixOverrides="and">
+      <if test="id != null">
+        id like CONCAT('%',#{id},'%' )
+      </if>
+      <if test="skill != null">
+        and skill like CONCAT('%',#{skill},'%' )
+      </if>
+      <if test="language != null">
+        and language like CONCAT('%',#{language},'%' )
+      </if>
+      <if test="location != null">
+        and location like CONCAT('%',#{location},'%' )
+      </if>
+      <if test="industry != null">
+        and industry like CONCAT('%',#{industry},'%' )
+      </if>
+      <if test="bandLow != null">
+        and band_low like CONCAT('%',#{bandLow},'%' )
+      </if>
+      <if test="bandHigh != null">
+        and band_high like CONCAT('%',#{bandHigh},'%' )
+      </if>
+      <if test="onsite != null">
+        and onsite like CONCAT('%',#{onsite},'%' )
+      </if>
+      <if test="parttime != null">
+        and parttime like CONCAT('%',#{parttime},'%' )
+      </if>
+      <if test="quantity != null">
+        and quantity like CONCAT('%',#{quantity},'%' )
+      </if>
+      <if test="startTime != null">
+        and start_time like CONCAT('%',#{startTime},'%' )
+      </if>
+      <if test="endTime != null">
+        and end_time like CONCAT('%',#{endTime},'%' )
+      </if>
+      <if test="status != null">
+        and status like CONCAT('%',#{status},'%' )
+      </if>
+      <if test="comment != null">
+        and comment like CONCAT('%',#{comment},'%' )
+      </if>
+      <if test="createtime != null">
+        and createtime like CONCAT('%',#{createtime},'%' )
+      </if>
+      <if test="updater != null">
+        and like CONCAT('%',#{updater},'%' )
+      </if>
+    </trim>
+
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_demand
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_demand
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.spring.demand.model.Demand">
+    insert into t_demand (id, skill, language, 
+      location, industry, band_low, 
+      band_high, onsite, parttime, 
+      quantity, start_time, end_time, 
+      status, comment, createtime, 
+      updater, updatetime)
+    values (#{id,jdbcType=INTEGER}, #{skill,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, #{bandLow,jdbcType=INTEGER}, 
+      #{bandHigh,jdbcType=INTEGER}, #{onsite,jdbcType=BIT}, #{parttime,jdbcType=BIT}, 
+      #{quantity,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updater,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.spring.demand.model.Demand">
+    insert into t_demand
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="skill != null">
+        skill,
+      </if>
+      <if test="language != null">
+        language,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="industry != null">
+        industry,
+      </if>
+      <if test="bandLow != null">
+        band_low,
+      </if>
+      <if test="bandHigh != null">
+        band_high,
+      </if>
+      <if test="onsite != null">
+        onsite,
+      </if>
+      <if test="parttime != null">
+        parttime,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="skill != null">
+        #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="bandLow != null">
+        #{bandLow,jdbcType=INTEGER},
+      </if>
+      <if test="bandHigh != null">
+        #{bandHigh,jdbcType=INTEGER},
+      </if>
+      <if test="onsite != null">
+        #{onsite,jdbcType=BIT},
+      </if>
+      <if test="parttime != null">
+        #{parttime,jdbcType=BIT},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.spring.demand.model.Demand">
+    update t_demand
+    <set>
+      <if test="skill != null">
+        skill = #{skill,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null">
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="bandLow != null">
+        band_low = #{bandLow,jdbcType=INTEGER},
+      </if>
+      <if test="bandHigh != null">
+        band_high = #{bandHigh,jdbcType=INTEGER},
+      </if>
+      <if test="onsite != null">
+        onsite = #{onsite,jdbcType=BIT},
+      </if>
+      <if test="parttime != null">
+        parttime = #{parttime,jdbcType=BIT},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.spring.demand.model.Demand">
+    update t_demand
+    set skill = #{skill,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      band_low = #{bandLow,jdbcType=INTEGER},
+      band_high = #{bandHigh,jdbcType=INTEGER},
+      onsite = #{onsite,jdbcType=BIT},
+      parttime = #{parttime,jdbcType=BIT},
+      quantity = #{quantity,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updater = #{updater,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
